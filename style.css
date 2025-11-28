@@ -1,0 +1,7 @@
+
+body { margin:0; font-family:'Tajawal', sans-serif; background:#022A2A; color:#F2ECDC;}
+.header { display:flex; justify-content:space-between; padding:20px; background:#022A2A; }
+.header a { color:#F2ECDC; margin:0 10px; text-decoration:none; }
+.container { padding:40px 20px; max-width:1200px; margin:auto; text-align:center; }
+.card { background:#013535; padding:20px; border-radius:10px; margin-top:20px; }
+.btn { display:inline-block; padding:12px 25px; background:#F2ECDC; color:#022A2A; border-radius:6px; text-decoration:none; margin-top:20px; font-size:20px; cursor:pointer; }

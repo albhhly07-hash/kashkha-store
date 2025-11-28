@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>الدفع | كشخة</title>
+<link rel="stylesheet" href="style.css">
+<script>
+function sendWhatsAppOrder() {
+    // بيانات افتراضية من السلة (يمكن ربطها لاحقاً بنظام فعلي)
+    const product = "قميص فاخر رجالي";
+    const color = document.getElementById('color').value;
+    const size = document.getElementById('size').value;
+    const quantity = document.getElementById('qty').value;
+
+    const message = 
+        "طلب جديد من متجر كشخة:%0A" +
+        "--------------------%0A" +
+        "المنتج: " + product + "%0A" +
+        "اللون: " + color + "%0A" +
+        "المقاس: " + size + "%0A" +
+        "الكمية: " + quantity + "%0A" +
+        "--------------------%0A" +
+        "الرجاء تأكيد الطلب.";
+
+    const phone = "96872733350";
+    const url = "https://wa.me/" + phone + "?text=" + message;
+
+    window.open(url, "_blank");
+}
+</script>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="logo">كشخة</div>
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="products.html">المنتجات</a>
+    <a href="cart.html">السلة</a>
+    <a href="contact.html">تواصل معنا</a>
+      
+  </nav>
+</header>
+
+<div class="container">
+  <h1>الدفع عبر الواتساب</h1>
+  <p>يرجى اختيار المواصفات ثم الضغط على زر الإرسال.</p>
+
+  <div class="card" style="max-width:400px;margin:auto;text-align:right;">
+    <label>اللون</label>
+    <input id="color" type="text" placeholder="مثال: أسود" style="width:100%;padding:10px;margin:8px 0;">
+
+    <label>المقاس</label>
+    <input id="size" type="text" placeholder="مثال: L" style="width:100%;padding:10px;margin:8px 0;">
+
+    <label>الكمية</label>
+    <input id="qty" type="number" value="1" style="width:100%;padding:10px;margin:8px 0;">
+
+    <button class="btn" onclick="sendWhatsAppOrder()">إرسال الطلب عبر واتساب</button>
+  </div>
+</div>
+
+
+<a href="https://wa.me/96872733350" target="_blank" 
+   style="position:fixed;bottom:25px;right:25px;background:#25D366;color:white;
+          padding:15px 18px;border-radius:50%;font-size:26px;text-decoration:none;
+          z-index:999;">
+    💬
+</a>
+
+
+<div style="text-align:center;padding:40px 0;color:#F2ECDC;">
+    <a href="https://www.instagram.com/kashkha_store5/" 
+       target="_blank" style="color:#F2ECDC;font-size:20px;text-decoration:none;">
+       
+    </a>
+</div>
+
+
+<div style="text-align:center;padding:40px 0;">
+    <a href="https://www.instagram.com/kashkha_store5/" target="_blank" style="text-decoration:none;">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png"
+             alt="Instagram"
+             style="width:45px;filter:brightness(0) invert(1);">
+    </a>
+</div>
+
+</body>
+</html>
