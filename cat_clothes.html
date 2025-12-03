@@ -2,7 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>سديري - جميع المنتجات</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>كشخة - سديريات</title>
 <style>
 body {background:#e6f4e6;font-family:Tahoma;padding:20px;margin:0;}
 .header {
@@ -25,6 +26,7 @@ h3 {margin:10px 0;color:#2a5d2a;}
 .btn {
     margin-top:10px;background:#2a5d2a;color:white;
     padding:10px;width:100%;border:none;border-radius:6px;cursor:pointer;
+    font-size:16px;
 }
 .btn:hover {background:#1f451f;}
 select{width:100%;padding:8px;margin-top:6px;border-radius:6px;}
@@ -34,6 +36,12 @@ select{width:100%;padding:8px;margin-top:6px;border-radius:6px;}
   border-radius:8px;text-decoration:none;font-size:18px;border:none;cursor:pointer;
 }
 .topbar a:last-child{background:#1f451f;}
+@media (max-width: 900px){
+  .grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width: 500px){
+  .grid{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -46,29 +54,119 @@ select{width:100%;padding:8px;margin-top:6px;border-radius:6px;}
 
 <div class="header">كشخة - سديريات</div>
 
-<div class="grid">
-  <!-- (نفس 33 بطاقة الموجودة عندك بدون تغيير) -->
-  <!-- أبقيت محتوى بطاقاتك كما هو -->
-  <!-- START CARDS -->
-  <!-- الصق هنا بطاقاتك الحالية (هي موجودة أصلاً في ملفك) -->
-  <!-- END CARDS -->
-</div>
+<div class="grid" id="sdairyGrid"></div>
 
 <script>
-function addToCart(button) {
-    const card = button.closest(".card");
-    const name = "سديري";
-    const color = card.querySelector("p").innerText.replace("اللون: ", "");
-    const size = card.querySelector("select").value;
-    const price = 12;
-    const img = card.querySelector("img").getAttribute("src") || "";
-    const product = { name, color, size, price, img };
+const COLORS = [
+  "أبيض × بني فاتح مغبش",
+  "جملي × أسود",
+  "أبيض × بني غامق مغبش",
+  "زيتي غامق × رمادي فاتح",
+  "كحلي × رمادي مغبش",
+  "أبيض × مغبش خمري",
+  "رمادي × كحلي مغبش",
+  "أبيض × بني غامق مغبش",
+  "أسود × رمادي غامق",
+  "بني مغبش × أسود",
+  "أبيض × أسود",
+  "أبيض × بني غامق مغبش ",
+  "زيتي غامق × رمادي فاتح",
+  "أبيض مغبش × خمري",
+  "أسود × بيج فاتح",
+  "بني × بيج",
+  "زيتي غامق × رمادي غامق",
+  "بني × بني غامق مغبش",
+  "جملي × كحلي",
+  "أبيض × أسود",
+  "بني × أسود",
+  "رمادي × أبيض",
+  "عناي × غامق × أبيض",
+  "بيج × بني غامق",
+  "كحلي مغبش × أبيض",
+  "أبيض ثلجي × أسود مغبش",
+  "أبيض × بني قهوة",
+  "بني × أسود",
+  "أبيض × أسود مربعات",
+  "رمادي × كحلي",
+  "بيج × كحلي سادة",
+  "جملي × كحلي قصة",
+  "بيج × كحلي قصة"
+];
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push(product);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert("تمت الإضافة إلى السلة ✔️");
+const SIZES = [
+  "S-2XL-3XL",
+  "S-2XL",
+  "2XL",
+  "XL-2XL-3XL",
+  "XL-2XL-3XL",
+  "M-2XL-3XL",
+  "S-M-2XL-3XL",
+  "S-S-2XL-2XL",
+  "M",
+  "S-2XL",
+  "XL",
+  "3XL",
+  "S-M-3XL",
+  "2XL",
+  "3XL",
+  "S-3XL",
+  "S-M-XL-3XL",
+  "S-3XL",
+  "S-S-L-3XL-3XL",
+  "S-S-2XL-2XL",
+  "S-3XL",
+  "S-2XL-3XL",
+  "2XL-3XL",
+  "S-S",
+  "M-2XL-2XL-2XL-3XL-3XL-3XL",
+  "S-2XL-3XL-3XL",
+  "S-M-2XL-3XL-3XL",
+  "S-S-L-3XL-3XL-3XL",
+  "S-S-2XL-3XL-3XL",
+  "S-2XL-3XL",
+  "M-3XL",
+  "S",
+  "S-3XL"
+];
+
+const grid = document.getElementById("sdairyGrid");
+
+COLORS.forEach((color, i) => {
+  const sizes = (SIZES[i] || "S-M-L-XL-2XL-3XL").split("-");
+  const options = sizes.map(s => `<option>${s}</option>`).join("");
+
+  grid.innerHTML += `
+    <div class="card">
+      <img src="images/sdairy/sdairy${i+1}.jpg" alt="سديري ${i+1}">
+      <h3>سديري</h3>
+      <p>اللون: ${color}</p>
+
+      <label>المقاس:</label>
+      <select>${options}</select>
+
+      <p class="price">12 ريال</p>
+      <button class="btn" onclick="addToCart(this)">إضافة إلى السلة</button>
+    </div>
+  `;
+});
+
+function addToCart(button) {
+  const card = button.closest(".card");
+  const name = "سديري";
+  const color = card.querySelector("p").innerText.replace("اللون: ", "").trim();
+  const size = card.querySelector("select").value;
+  const price = 12;
+  const img = card.querySelector("img").getAttribute("src") || "";
+
+  const product = { name, color, size, price, img };
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert("تمت الإضافة إلى السلة ✔️");
 }
 </script>
+
 </body>
 </html>
